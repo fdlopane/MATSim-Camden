@@ -11,7 +11,7 @@ University College London
 
 import os
 
-import geopandas as gp
+import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -25,6 +25,30 @@ from pam.utils import minutes_to_datetime as mtdt
 from pam.variables import END_OF_DAY
 from pam.write import to_csv, write_matsim, write_od_matrices
 
-# Import geographic data
-network_bb_path = os.path.join("data", "network_bounding_box.geojson")
-lsoas_path = os.path.join("data", "lsoas")  # lsoas: lower layer super output areas
+from config import *
+
+def run_population_creation(borough='Camden'):
+    print('Starting population creation...')
+    # Import geographic data
+
+    # Import London LSOAs
+    lsoas_london = gpd.read_file(inputs['lsoas_path'])
+
+    # Filter out borough (default = Camden)
+    lsoas = lsoas_london.loc[lsoas_london['LA_NAME'] == borough]
+
+    # Iterative Proportional Fitting (IPF)
+
+    # read lsoa data for IPF
+    lsoa_data = pd.read_csv(inputs['lsoa-data'])
+    lsoa_data.rename(columns={'Codes': 'LSOA_CODE'}, inplace=True)
+    lsoa_data.set_index('LSOA_CODE') # remember to change "£" to "GPB" in census table
+
+    print(lsoa_data.columns)
+
+    # Let's create a seed population which includes every possible combination of attributes:
+    dims = {
+        'age': ['0-15', '16-29', '30-44', '45-64', '65+'], # Todo: remove 'All Ages', 'working age'
+
+
+    }

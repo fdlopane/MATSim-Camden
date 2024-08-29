@@ -12,3 +12,4 @@ University College London
 import population_creation as popc
 
 # Generate input synthetic population
+popc.run_population_creation()
