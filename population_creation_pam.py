@@ -44,7 +44,9 @@ def run_population_creation(borough='Camden'):
     lsoa_data.rename(columns={'Codes': 'LSOA_CODE'}, inplace=True)
     lsoa_data.set_index('LSOA_CODE') # remember to change "£" to "GPB" in census table
 
-    print(lsoa_data.columns)
+    # Print fields of lsoa data df:
+    for i in lsoa_data.columns:
+        print(i)
 
     # Let's create a seed population which includes every possible combination of attributes:
     dims = {
@@ -52,3 +54,10 @@ def run_population_creation(borough='Camden'):
 
 
     }
+
+
+    # USE POPULATION SIM (which uses entropy maximisation) INSTEAD OF PAM+IPF
+    # https://activitysim.github.io/populationsim/application_configuration.html
+    # https://github.com/ActivitySim/populationsim?tab=readme-ov-file
+    # activitysim PTV presentation: https://www.youtube.com/watch?v=kXwwnV7wbMM
+    
